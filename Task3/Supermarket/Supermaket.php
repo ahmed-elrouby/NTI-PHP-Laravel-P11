@@ -10,7 +10,7 @@ function Calculate_Bill($elementcont)
 function supermarket_discount($bill)
 {
     if ($bill > 0 && $bill < 1000) {
-        return $bill;
+        return 0;
     }
     if ($bill >= 1000 && $bill < 3000) {
         return $bill * 0.1;
@@ -22,19 +22,22 @@ function supermarket_discount($bill)
         return $bill * 0.2;
     }
 }
+
 $currency = "EGP";
 $cities = ['Cairo', 'Giza', 'Alex', 'Other'];
 $cities_cost = [0, 30, 50, 100];
 $options = "";
+
+// city option code
 for ($i = 0; $i < count($cities); $i++) {
     $options .= "<option value=";
     $options .= $cities_cost[$i] . " ";
     $options .= ($cities[array_search($_POST['city'], $cities_cost)] == $cities[$i]) ? "selected" : "";
     $options .= " >" . $cities[$i] . "</option>";
 }
-// $x=($cities[array_search($_POST['city'],$cities_cost)]=="Giza") ? "selected" : "unselected";
 
 if ($_POST) {
+    //Enter product Button
     if (isset($_POST['enter-product'])) {
         if (empty($_POST['name'])) {
             $error['name'] = "<div class='alert alert-warning'>Name is Required</div>";
@@ -43,36 +46,38 @@ if ($_POST) {
             $error['products_n'] = "<div class='alert alert-warning'>Loan Year is Required</div>";
         }
         if (empty($error)) {
-            $name = $_POST['name'];
-            $product_n = $_POST['products_n'];
-            $city = $_POST['city'];
             $btndisable = "disabled";
             $proudts_input = "<div><form method='post' ><table class='table table-striped table'><thead><tr><th>Product Name</th><th>Price</th><th>Quantity</th> </tr></thead><tbody>";
-            for ($i = 0; $i < $product_n; $i++) {
-                $proudts_input .= "<tr><td><input type='text' name=product-" . ($i + 1) . "></td><td><input type='number' name=price-" . ($i + 1) . "></td><td><input type='number' name=Quantity-" . ($i + 1) . "><input type='hidden' name='name' value=$name><input type='hidden' name='product_n' value=$product_n><input type='hidden' name='city' value=$city></td></tr>";
+            for ($i = 0; $i < $_POST['products_n']; $i++) {
+                $proudts_input .= "<tr><td><input type='text' name=product-" . ($i + 1) . "></td><td><input type='number' name=price-" . ($i + 1) . "></td><td><input type='number' name=Quantity-" . ($i + 1) . "><input type='hidden' name='name' value=".$_POST['name']."><input type='hidden' name='products_n' value=".$_POST['products_n']."><input type='hidden' name='city' value=".$_POST['city']."></td></tr>";
             }
             $proudts_input .= "</tbody></table><button type='submit' class='btn btn-dark' class='form-control' name='show-bill' >Show Bill</button></form></div>";
         }
     }
+
+    // Show bill Button
     if (isset($_POST['show-bill'])) {
-        $name = $_POST['name'];
-        $product_n = $_POST['product_n'];
-        $city = $_POST['city'];
-        $Total_bill = Calculate_Bill($product_n);
+        
+        $Total_bill = Calculate_Bill($_POST['products_n']);
         $Discount = supermarket_discount($Total_bill);
+
         $Tableofproduct = "<table class='table table-striped table-primary table-bordered'><thead><tr><th>Product Name</th><th>Price</th><th>Quantity</th><th>Sub Total</th> </tr></thead><tbody>";
-        for ($i = 0; $i < $product_n; $i++) {
+        for ($i = 0; $i < $_POST['products_n']; $i++) {
             $Tableofproduct .= "<tr><td>" . $_POST["product-" . ($i + 1)] . "</td><td>" . $_POST["price-" . ($i + 1)] . "</td><td>" . $_POST["Quantity-" . ($i + 1)] . "</td><td>" . ($_POST["Quantity-" . ($i + 1)] * $_POST["price-" . ($i + 1)]) . "</td><tr>";
         }
 
+        $checkdelevrystatus=($Total_bill>0)?($Total_bill - $Discount + $_POST['city']):(0);
+        $cityindex=array_search($_POST['city'], $cities_cost);
+
         $Tableofproduct .= "</tbody></table>";
-        $billResult = "<table class='table table-dark'><thead><tr><th>Client Name</th><th>$name</th></thead><tbody>
-        <tr><td>City</td><td>$cities[$cityindex]</td></tr>
+        $billResult = "<table class='table table-dark'><thead>
+        <tr><th>Client Name</th><th>".$_POST['name']."</th></thead>
+        <tbody><tr><td>City</td><td>$cities[$cityindex]</td></tr>
         <tr><td>Total</td><td>" . $Total_bill . " $currency</td></tr>
         <tr><td>Discount</td><td>" . $Discount . " $currency</td></tr>
         <tr><td>Total After Discount</td><td>" . ($Total_bill - $Discount) . " $currency</td></tr>
-        <tr><td>Delevery Cost</td><td>" . $city . " $currency</td></tr>
-        <tr><td>Total Paymet Bill</td><td>" . ($Total_bill - $Discount + $city) . " $currency</td></tr>
+        <tr><td>Delevery Cost</td><td>" . $_POST['city'] . " $currency</td></tr>
+        <tr><td>Total Paymet Bill</td><td>" . $checkdelevrystatus . " $currency</td></tr>
         </tbody></table>";
     }
 }
@@ -105,7 +110,7 @@ if ($_POST) {
                     <label for="name" class="h3">
                         User Name
                     </label>
-                    <input type="text" name="name" id="name" class="form-control" value=<?= $name ?>>
+                    <input type="text" name="name" id="name" class="form-control" value=<?= $_POST['name'] ?>>
                     <?= $error['name']; ?>
                 </div>
                 <div class="form-group">
@@ -118,16 +123,16 @@ if ($_POST) {
                     <label for="product_n" class="h3">
                         Number of Products
                     </label>
-                    <input type="number" name="products_n" id="products_n" class="form-control" value=<?= $product_n ?>>
+                    <input type="number" name="products_n" id="products_n" class="form-control" value=<?=$_POST['products_n']?>>
                     <?= $error['products_n']; ?>
                 </div>
                 <button type="submit" class="btn btn-dark" class="form-control " name="enter-product" <?php if (isset($btndisable)) {
                                                                                                             echo $btndisable;
                                                                                                         } ?>>Enter Products <i class="fas fa-angle-double-down text-danger p-2"></i></button>
             </form>
-            <?= $proudts_input; ?>
-            <?= $Tableofproduct; ?>
-            <?= $billResult; ?>
+            <?= $proudts_input;?>
+            <?= $Tableofproduct;?>
+            <?= $billResult;?>
         </div>
     </div>
     <!-- Optional JavaScript -->

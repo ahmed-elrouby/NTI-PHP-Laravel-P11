@@ -30,12 +30,11 @@ function checkResult($result,$phone)
         return "<div class='alert alert-success text-center mb-5'>Thank you for your Evaluate our Hospital with Posiatve Result</div>";
     }
 }
-
-$result=$_SESSION['result'];
-$phone=$_SESSION['phone'];
-$FinalResult=checkResult($result,$phone);
-$totalPreview=Convet_PointtoDegrees($result/5);
-$selections=$_SESSION['selection'];
+$FinalResult=checkResult($_SESSION['result'],$_SESSION['phone']);
+$totalPreview=Convet_PointtoDegrees($_SESSION['result']/count($_SESSION['selection']));
+unset($_SESSION['result']);
+unset($_SESSION['phone']);
+session_destroy();
 ?>
 
 <!doctype html>
@@ -63,23 +62,23 @@ $selections=$_SESSION['selection'];
           <tbody class="text-center">
               <tr>
                   <td >1- Do you Satisfiy with the Degree of Cleanliness ?</td>
-                  <td><?php echo Convet_PointtoDegrees($selections[0])?></td>
+                  <td><?php echo Convet_PointtoDegrees($_SESSION['selection'][0])?></td>
               </tr>
               <tr>
                   <td>2- Do you Satisfiy with the Price of Services ?</td>
-                  <td><?php echo Convet_PointtoDegrees($selections[1])?></td>
+                  <td><?php echo Convet_PointtoDegrees($_SESSION['selection'][1])?></td>
               </tr>
               <tr>
                   <td>3- Do you Satisfiy with the Nursing service ?</td>
-                  <td><?php echo Convet_PointtoDegrees($selections[2])?></td>
+                  <td><?php echo Convet_PointtoDegrees($_SESSION['selection'][2])?></td>
               </tr>
               <tr>
                   <td>4- Do you Satisfiy with the Level of Doctors ?</td>
-                  <td><?php echo Convet_PointtoDegrees($selections[3])?></td>
+                  <td><?php echo Convet_PointtoDegrees($_SESSION['selection'][3])?></td>
               </tr>
               <tr>
                   <td>5- Do you Satisfiy with the Quietness in Hospital ?</td>
-                  <td><?php echo Convet_PointtoDegrees($selections[4])?></td>
+                  <td><?php echo Convet_PointtoDegrees($_SESSION['selection'][4])?></td>
               </tr>
               <tr class="bg-danger text-white h3 ">
                   <td>Total preview</td>

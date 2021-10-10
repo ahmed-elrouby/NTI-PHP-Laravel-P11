@@ -5,11 +5,6 @@ function survey_result($s1,$s2,$s3,$s4,$s5)
     return $s1+$s2+$s3+$s4+$s5;
 }
 if($_POST) {
-        $q1s=$_POST["Q1s"];
-        $q2s=$_POST["Q2s"];
-        $q3s=$_POST["Q3s"];
-        $q4s=$_POST["Q4s"];
-        $q5s=$_POST["Q5s"];
         if (!isset($_POST["Q1s"])) {
             echo $_POST["Q1s"];
             $error["Q1s"] = "<tr><td class='alert alert-warning text-center' colspan='5'>Question-1 selection is Required</td></tr>";
@@ -28,8 +23,8 @@ if($_POST) {
         }
     if (empty($error)) {
         
-        $result=survey_result($q1s,$q2s,$q3s,$q4s,$q5s);
-        $question_selection=[$q1s,$q2s,$q3s,$q4s,$q5s];
+        $result=survey_result($_POST['Q1s'],$_POST['Q2s'],$_POST['Q3s'],$_POST['Q4s'],$_POST['Q5s']);
+        $question_selection=[$_POST['Q1s'],$_POST['Q2s'],$_POST['Q3s'],$_POST['Q4s'],$_POST['Q5s']];
         $_SESSION['selection']=$question_selection; 
         $_SESSION['result']=$result;
         header("location:result.php");
@@ -65,42 +60,42 @@ if($_POST) {
           <tbody>
               <tr>
                   <td >1- Do you Satisfiy with the Degree of Cleanliness ?</td>
-                  <td><input type="radio" value='0' name="Q1s" class="form-control" <?php if(isset($q1s)){if($q1s==0){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='3' name="Q1s" class="form-control" <?php if(isset($q1s)){if($q1s==3){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='5' name="Q1s" class="form-control" <?php if(isset($q1s)){if($q1s==5){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='10' name="Q1s" class="form-control" <?php if(isset($q1s)){if($q1s==10){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='0' name="Q1s" class="form-control" <?php if(isset($_POST['Q1s'])){if($_POST['Q1s']==0){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='3' name="Q1s" class="form-control" <?php if(isset($_POST['Q1s'])){if($_POST['Q1s']==3){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='5' name="Q1s" class="form-control" <?php if(isset($_POST['Q1s'])){if($_POST['Q1s']==5){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='10' name="Q1s" class="form-control" <?php if(isset($_POST['Q1s'])){if($_POST['Q1s']==10){?>checked=<?php echo"checked";}}?>></td>
               </tr>
               <?=$error["Q1s"];?>
               <tr>
                   <td>2- Do you Satisfiy with the Price of Services ?</td>
-                  <td><input type="radio" value='0' name="Q2s" class="form-control" <?php if(isset($q2s)){if($q2s==0){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='3' name="Q2s" class="form-control" <?php if(isset($q2s)){if($q2s==3){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='5' name="Q2s" class="form-control" <?php if(isset($q2s)){if($q2s==5){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='10' name="Q2s" class="form-control" <?php if(isset($q2s)){if($q2s==10){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='0' name="Q2s" class="form-control" <?php if(isset($_POST['Q2s'])){if($_POST['Q2s']==0){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='3' name="Q2s" class="form-control" <?php if(isset($_POST['Q2s'])){if($_POST['Q2s']==3){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='5' name="Q2s" class="form-control" <?php if(isset($_POST['Q2s'])){if($_POST['Q2s']==5){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='10' name="Q2s" class="form-control" <?php if(isset($_POST['Q2s'])){if($_POST['Q2s']==10){?>checked=<?php echo"checked";}}?>></td>
               </tr>
               <?=$error["Q2s"];?>
               <tr>
                   <td>3- Do you Satisfiy with the Nursing service ?</td>
-                  <td><input type="radio" value='0' name="Q3s" class="form-control" <?php if(isset($q3s)){if($q3s==0){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='3' name="Q3s" class="form-control" <?php if(isset($q3s)){if($q3s==3){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='5' name="Q3s" class="form-control" <?php if(isset($q3s)){if($q3s==5){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='10' name="Q3s" class="form-control" <?php if(isset($q3s)){if($q3s==10){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='0' name="Q3s" class="form-control" <?php if(isset($_POST['Q3s'])){if($_POST['Q3s']==0){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='3' name="Q3s" class="form-control" <?php if(isset($_POST['Q3s'])){if($_POST['Q3s']==3){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='5' name="Q3s" class="form-control" <?php if(isset($_POST['Q3s'])){if($_POST['Q3s']==5){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='10' name="Q3s" class="form-control" <?php if(isset($_POST['Q3s'])){if($_POST['Q3s']==10){?>checked=<?php echo"checked";}}?>></td>
               </tr>
               <?=$error["Q3s"];?>
               <tr>
                   <td>4- Do you Satisfiy with the Level of Doctors ?</td>
-                  <td><input type="radio" value='0' name="Q4s" class="form-control" <?php if(isset($q4s)){if($q4s==0){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='3' name="Q4s" class="form-control" <?php if(isset($q4s)){if($q4s==3){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='5' name="Q4s" class="form-control" <?php if(isset($q4s)){if($q4s==5){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='10' name="Q4s" class="form-control" <?php if(isset($q4s)){if($q4s==10){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='0' name="Q4s" class="form-control" <?php if(isset($_POST['Q4s'])){if($_POST['Q4s']==0){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='3' name="Q4s" class="form-control" <?php if(isset($_POST['Q4s'])){if($_POST['Q4s']==3){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='5' name="Q4s" class="form-control" <?php if(isset($_POST['Q4s'])){if($_POST['Q4s']==5){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='10' name="Q4s" class="form-control" <?php if(isset($_POST['Q4s'])){if($_POST['Q4s']==10){?>checked=<?php echo"checked";}}?>></td>
               </tr>
               <?=$error["Q4s"];?>
               <tr>
                   <td>5- Do you Satisfiy with the Quietness in Hospital ?</td>
-                  <td><input type="radio" value='0' name="Q5s" class="form-control" <?php if(isset($q5s)){if($q5s==0){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='3' name="Q5s" class="form-control" <?php if(isset($q5s)){if($q5s==3){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='5' name="Q5s" class="form-control" <?php if(isset($q5s)){if($q5s==5){?>checked=<?php echo"checked";}}?>></td>
-                  <td><input type="radio" value='10' name="Q5s" class="form-control" <?php if(isset($q5s)){if($q5s==10){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='0' name="Q5s" class="form-control" <?php if(isset($_POST['Q5s'])){if($_POST['Q5s']==0){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='3' name="Q5s" class="form-control" <?php if(isset($_POST['Q5s'])){if($_POST['Q5s']==3){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='5' name="Q5s" class="form-control" <?php if(isset($_POST['Q5s'])){if($_POST['Q5s']==5){?>checked=<?php echo"checked";}}?>></td>
+                  <td><input type="radio" value='10' name="Q5s" class="form-control" <?php if(isset($_POST['Q5s'])){if($_POST['Q5s']==10){?>checked=<?php echo"checked";}}?>></td>
               </tr>
               <?=$error["Q5s"];?>
           </tbody>

@@ -23,13 +23,9 @@ if ($_POST) {
     }
 
     if (empty($error)) {
-        $br="<br>";
-        $name=$_POST['name'];
-        $year=$_POST['lyear'];
-        $amount=$_POST['lamount'];
-        $interest_rate=CalcInterestRate($year,$amount);
-        $total_amount=$interest_rate+$amount;
-        $monthly_payment=$total_amount/(12*$year);
+        $interest_rate=CalcInterestRate($_POST['lyear'],$_POST['lamount']);
+        $total_amount=$interest_rate+$_POST['lamount'];
+        $monthly_payment=$total_amount/(12*$_POST['lyear']);
         $result="<h4 class='mt-5 mb-3'>Loan Details</h4>
         <table class='table table-striped table-dark'>
         <thead>
@@ -43,7 +39,7 @@ if ($_POST) {
         <tbody>
           <tr>
             <td>$interest_rate</td>
-            <td>$year</td>
+            <td>".$_POST['lyear']."</td>
             <td>$total_amount</td>
             <td>$monthly_payment</td>
           </tr>
@@ -76,21 +72,21 @@ if ($_POST) {
               <label for="name">
                   Name
               </label>
-              <input type="text" name="name" id="name" class="form-control" value=<?=$name?>>
+              <input type="text" name="name" id="name" class="form-control" value=<?=$_POST['name']?>>
               <?=$error['name'];?>
           </div>
           <div class="form-group">
               <label for="amount">
                   Loan amount
               </label>
-              <input type="number" name="lamount" id="amount" class="form-control" value=<?=$amount?>>
+              <input type="number" name="lamount" id="amount" class="form-control" value=<?=$_POST['lamount']?>>
               <?= $error['lamount'];?>
           </div>
           <div class="form-group">
               <label for="year">
                   Loan year
               </label>
-              <input type="number" name="lyear" id="year" class="form-control" value=<?=$year?>>
+              <input type="number" name="lyear" id="year" class="form-control" value=<?=$_POST['lyear']?>>
               <?= $error['lyear'];?>
           </div>
           <button type="submit" class="btn btn-primary" class="form-control">Calculate Loan <i class="fas fa-sign-in-alt text-dark"></i></button>
