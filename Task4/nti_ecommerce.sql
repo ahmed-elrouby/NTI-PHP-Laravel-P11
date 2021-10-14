@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 13, 2021 at 06:08 PM
+-- Generation Time: Oct 14, 2021 at 12:56 PM
 -- Server version: 8.0.17
 -- PHP Version: 7.3.10
 
@@ -338,6 +338,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `phone` varchar(11) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `gender` enum('f','m') DEFAULT NULL COMMENT 'f=> female, m=> male',
   `status` tinyint(1) DEFAULT '0' COMMENT '0=> user not verified ,1=>user verified',
   `code` int(5) DEFAULT NULL,
   `verified_at` timestamp NULL DEFAULT NULL,
@@ -349,8 +350,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `status`, `code`, `verified_at`) VALUES
-(1, 'ahmed', 'elrouby', 'ahmed@gmail.com', '1232323', 'sdasfsere', 0, NULL, NULL);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `gender`, `status`, `code`, `verified_at`) VALUES
+(1, 'ahmed', 'elrouby', 'ahmed@gmail.com', '1232323', 'sdasfsere', NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
